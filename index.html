@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rapido Invoice Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="rapido-template.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🚗 Rapido Invoice Generator</h1>
+        <p>Generate bulk cab invoices with random address selection</p>
+      </header>
+
+      <div class="form-container">
+        <form id="invoiceForm">
+          <div class="form-section">
+            <h3>👤 Your Name</h3>
+            <input type="text" id="userName" placeholder="Enter your name" required />
+          </div>
+          <div class="form-section">
+            <h3>📍 Pickup Addresses</h3>
+            <div id="pickupAddresses">
+              <div class="address-input">
+                <input type="text" placeholder="Enter pickup address" class="address-field" required />
+                <button type="button" class="remove-btn" onclick="removeAddress(this, 'pickup')">×</button>
+              </div>
+            </div>
+            <button type="button" class="add-btn" onclick="addAddress('pickup')">+ Add Pickup Address</button>
+          </div>
+
+          <div class="form-section">
+            <h3>🎯 Drop Addresses</h3>
+            <div id="dropAddresses">
+              <div class="address-input">
+                <input type="text" placeholder="Enter drop address" class="address-field" required />
+                <button type="button" class="remove-btn" onclick="removeAddress(this, 'drop')">×</button>
+              </div>
+            </div>
+            <button type="button" class="add-btn" onclick="addAddress('drop')">+ Add Drop Address</button>
+          </div>
+
+          <div class="form-section">
+            <h3>📅 Date Range</h3>
+            <div class="date-inputs">
+              <input type="date" id="startDate" required />
+              <span>to</span>
+              <input type="date" id="endDate" required />
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>⏰ Time Ranges</h3>
+            <div class="time-inputs">
+              <div class="time-group">
+                <label>Morning/Entry Time:</label>
+                <input type="time" id="entryStartTime" value="07:00" required />
+                <span>to</span>
+                <input type="time" id="entryEndTime" value="10:00" required />
+              </div>
+              <div class="time-group">
+                <label>Evening/Exit Time:</label>
+                <input type="time" id="exitStartTime" value="17:00" required />
+                <span>to</span>
+                <input type="time" id="exitEndTime" value="20:00" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>💰 Price Range</h3>
+            <div class="price-inputs">
+              <input type="number" id="minPrice" placeholder="Min Price" value="50" min="1" required />
+              <span>to</span>
+              <input type="number" id="maxPrice" placeholder="Max Price" value="200" min="1" required />
+            </div>
+          </div>
+
+          <button type="submit" class="generate-btn">Generate Invoices</button>
+        </form>
+      </div>
+
+      <div id="results" class="results-container" style="display: none">
+        <h3>Generated Invoices</h3>
+        <div id="invoiceList" class="invoice-list"></div>
+        <div class="download-actions">
+          <button id="downloadMergedBtn" class="download-btn">📄 Download Merged PDF</button>
+          <button id="downloadAllBtn" class="download-btn">📦 Download All as ZIP</button>
+          <button id="downloadIndividualBtn" class="download-btn">📄 Download Individual PDFs</button>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="script.js"></script>
+  </body>
+</html>

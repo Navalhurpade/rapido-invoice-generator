@@ -92,7 +92,7 @@ class RapidoTemplate {
   }
 
   addRideDetails(pdf, invoice, margin) {
-    let yPos = margin + 25;
+    let yPos = margin + 18;
     const detailsPageWidth = pdf.internal.pageSize.getWidth();
     const rightX = detailsPageWidth - margin - 5;
 
@@ -158,52 +158,72 @@ class RapidoTemplate {
   addAddressSection(pdf, invoice, margin) {
     let yPos = margin + 105; // Adjusted for larger price box
     const addressPageWidth = pdf.internal.pageSize.getWidth();
+    const boxHeight = 40;
+    const padding = 4;
 
     // Address box background
     pdf.setFillColor(...this.lightGray);
-    pdf.rect(margin + 5, yPos, addressPageWidth - 2 * margin - 10, 40, 'F');
+    pdf.rect(margin + 5, yPos, addressPageWidth - 2 * margin - 10, boxHeight, 'F');
 
-    // Pickup address with green dot
-    pdf.setFillColor(...this.greenColor);
     const dotX = margin + 10;
-    const topDotY = yPos + 8;
-    const bottomDotY = yPos + 28;
     const radius = 2;
-    pdf.circle(dotX, topDotY, radius, 'F');
+    const maxWidth = addressPageWidth - 2 * margin - 25; // Account for dot and margins
 
-    // Pickup address with larger font and text wrapping
+    // Calculate equal sections: top padding + pickup section + middle padding + drop section + bottom padding
+    const sectionHeight = (boxHeight - (2 * padding)) / 2; // Each section gets equal space
+    const pickupSectionStart = yPos + padding;
+    const dropSectionStart = yPos + padding + sectionHeight;
+
+    // Pickup address with text wrapping
     pdf.setTextColor(...this.darkColor);
     pdf.setFontSize(10);
     pdf.setFont('helvetica', 'normal');
-    const maxWidth = addressPageWidth - 2 * margin - 25; // Account for dot and margins
     const pickupLines = pdf.splitTextToSize(invoice.pickup, maxWidth);
-    let currentY = yPos + 10;
+    const pickupTextHeight = pickupLines.length * 4;
+    const pickupStartY = pickupSectionStart + (sectionHeight - pickupTextHeight) / 2 + 4;
+
+    let currentY = pickupStartY;
     pickupLines.forEach((line, index) => {
-      if (index === 0 || currentY < yPos + 20) { // Ensure it fits in top half
+      if (currentY < dropSectionStart - 2) { // Ensure it fits in pickup section
         pdf.text(line, margin + 18, currentY);
         currentY += 4;
       }
     });
 
-    // Vertical line centered between dots (tangent to both)
-    pdf.setDrawColor(200, 200, 200);
-    pdf.setLineWidth(0.5);
-    pdf.line(dotX, topDotY + radius, dotX, bottomDotY - radius);
+    // Green dot centered in pickup section
+    const pickupDotY = pickupSectionStart + (sectionHeight / 2);
+    pdf.setFillColor(...this.greenColor);
+    pdf.circle(dotX, pickupDotY, radius, 'F');
+    // White inner dot
+    pdf.setFillColor(255, 255, 255);
+    pdf.circle(dotX, pickupDotY, radius * 0.4, 'F');
 
-    // Drop address with red dot
-    pdf.setFillColor(...this.redColor);
-    pdf.circle(dotX, bottomDotY, radius, 'F');
-
-    // Drop address with larger font and text wrapping
+    // Drop address with text wrapping
     pdf.setTextColor(...this.darkColor);
     const dropLines = pdf.splitTextToSize(invoice.drop, maxWidth);
-    currentY = yPos + 30;
+    const dropTextHeight = dropLines.length * 4;
+    const dropStartY = dropSectionStart + (sectionHeight - dropTextHeight) / 2 + 4;
+
+    currentY = dropStartY;
     dropLines.forEach((line, index) => {
-      if (index === 0 || currentY < yPos + 38) { // Ensure it fits in bottom half
+      if (currentY < yPos + boxHeight - padding) { // Ensure it fits in drop section
         pdf.text(line, margin + 18, currentY);
         currentY += 4;
       }
     });
+
+    // Red dot centered in drop section
+    const dropDotY = dropSectionStart + (sectionHeight / 2);
+    pdf.setFillColor(...this.redColor);
+    pdf.circle(dotX, dropDotY, radius, 'F');
+    // White inner dot
+    pdf.setFillColor(255, 255, 255);
+    pdf.circle(dotX, dropDotY, radius * 0.4, 'F');
+
+    // Vertical line between dots
+    pdf.setDrawColor(200, 200, 200);
+    pdf.setLineWidth(0.5);
+    pdf.line(dotX, pickupDotY + radius + 1, dotX, dropDotY - radius - 1);
   }
 
   addFooter(pdf, margin) {

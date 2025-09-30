@@ -99,7 +99,7 @@ class RapidoTemplate {
     // Rows styling
     pdf.setTextColor(...this.darkColor);
     pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(12);
+    pdf.setFontSize(14);
 
     // Customer name
     pdf.text('Customer Name:', margin + 5, yPos);
@@ -176,7 +176,7 @@ class RapidoTemplate {
 
     // Pickup address with text wrapping
     pdf.setTextColor(...this.darkColor);
-    pdf.setFontSize(10);
+    pdf.setFontSize(16);
     pdf.setFont('helvetica', 'normal');
     const pickupLines = pdf.splitTextToSize(invoice.pickup, maxWidth);
     const pickupTextHeight = pickupLines.length * 4;
@@ -231,7 +231,7 @@ class RapidoTemplate {
     const footerPageWidth = pdf.internal.pageSize.getWidth();
 
     pdf.setTextColor(120, 120, 120);
-    pdf.setFontSize(9);
+    pdf.setFontSize(10);
     pdf.setFont('helvetica', 'normal');
 
     const disclaimer1 =

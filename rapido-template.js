@@ -138,7 +138,7 @@ class RapidoTemplate {
     const pricePageWidth = pdf.internal.pageSize.getWidth();
 
     // Larger price box background
-    pdf.setFillColor(248, 248, 248);
+    pdf.setFillColor(250, 250, 250);
     pdf.rect(margin + 5, yPos, pricePageWidth - 2 * margin - 10, 25, 'F');
 
     // Centered Selected Price label

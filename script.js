@@ -184,7 +184,8 @@ function handleFormSubmit(e) {
     exitStartTime,
     exitEndTime,
     minPrice,
-    maxPrice
+    maxPrice,
+    userName
   );
 
   displayInvoices(generatedInvoices);
@@ -202,7 +203,8 @@ function generateInvoices(
   exitStartTime,
   exitEndTime,
   minPrice,
-  maxPrice
+  maxPrice,
+  userName
 ) {
   const invoices = [];
   const currentDate = new Date(startDate);
@@ -217,12 +219,12 @@ function generateInvoices(
 
       // Generate morning/entry ride
       const entryTime = generateRandomTime(entryStartTime, entryEndTime);
-      const entryInvoice = createInvoice(currentDate, entryTime, randomPickup, randomDrop, 'Entry', minPrice, maxPrice);
+      const entryInvoice = createInvoice(currentDate, entryTime, randomPickup, randomDrop, 'Entry', minPrice, maxPrice, userName);
       invoices.push(entryInvoice);
 
       // Generate evening/exit ride
       const exitTime = generateRandomTime(exitStartTime, exitEndTime);
-      const exitInvoice = createInvoice(currentDate, exitTime, randomDrop, randomPickup, 'Exit', minPrice, maxPrice);
+      const exitInvoice = createInvoice(currentDate, exitTime, randomDrop, randomPickup, 'Exit', minPrice, maxPrice, userName);
       invoices.push(exitInvoice);
     }
 
@@ -233,7 +235,7 @@ function generateInvoices(
 }
 
 // Create a single invoice
-function createInvoice(date, time, pickup, drop, type, minPrice, maxPrice) {
+function createInvoice(date, time, pickup, drop, type, minPrice, maxPrice, userName) {
   const rideId = generateRideId();
   const driverName = driverNames[Math.floor(Math.random() * driverNames.length)];
   const vehicleNumber = vehicleNumbers[Math.floor(Math.random() * vehicleNumbers.length)];
@@ -252,6 +254,7 @@ function createInvoice(date, time, pickup, drop, type, minPrice, maxPrice) {
     type,
     price,
     totalAmount: price,
+    userName
   };
 }
 

@@ -103,7 +103,7 @@ class RapidoTemplate {
 
     // Customer name
     pdf.text('Customer Name:', margin + 5, yPos);
-    pdf.text('Naval hurpade', rightX, yPos, { align: 'right' });
+    pdf.text(invoice.userName, rightX, yPos, { align: 'right' });
     yPos += 8;
 
     // Ride ID

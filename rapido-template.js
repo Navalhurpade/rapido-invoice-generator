@@ -98,7 +98,7 @@ class RapidoTemplate {
 
     // Rows styling
     pdf.setTextColor(...this.darkColor);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont('PR serif', '500');
     pdf.setFontSize(14);
 
     // Customer name
@@ -143,12 +143,12 @@ class RapidoTemplate {
 
     // Centered Selected Price label
     pdf.setTextColor(...this.darkColor);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont('PR serif', '500');
     pdf.setFontSize(16);
     pdf.text('Selected Price', pricePageWidth / 2, yPos + 8, { align: 'center' });
 
     // Centered and larger price amount with proper formatting
-//     pdf.setFont('helvetica', 'bold');
+    pdf.setFont('PR serif', 'bold');
     pdf.setTextColor(38, 38, 38);
     pdf.setFontSize(20);
     const priceText = `Rs.${invoice.price}`;
@@ -176,8 +176,8 @@ class RapidoTemplate {
 
     // Pickup address with text wrapping
     pdf.setTextColor(...this.darkColor);
-    pdf.setFontSize(16);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(12);
+    pdf.setFont('Roboto', '300');
     const pickupLines = pdf.splitTextToSize(invoice.pickup, maxWidth);
     const pickupTextHeight = pickupLines.length * 4;
     const pickupStartY = pickupSectionStart + (sectionHeight - pickupTextHeight) / 2 + 4;
@@ -231,8 +231,8 @@ class RapidoTemplate {
     const footerPageWidth = pdf.internal.pageSize.getWidth();
 
     pdf.setTextColor(120, 120, 120);
-    pdf.setFontSize(10);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(9);
+    pdf.setFont('helvetica', 'light');
 
     const disclaimer1 =
       'This document is issued on request by the passenger. Rapido does not collect any fee/commission from passengers and shall not issue tax invoices to the passengers under this segment. The document may be used for all official / reimbursement purposes.';

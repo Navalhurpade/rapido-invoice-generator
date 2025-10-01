@@ -1,3 +1,8 @@
+import './Roboto.js';
+import './NotoSerif.js';
+import "./Roboto-medium.js";
+import "./Roboto-light.js";
+
 // Rapido Booking History Template
 // This file contains the template and styling for generating Rapido-style booking history documents
 
@@ -20,6 +25,10 @@ class RapidoTemplate {
     // Register fonts
     pdf.addFont('Roboto.js', 'Roboto', 'normal');
     pdf.addFont('NotoSerif.js', 'NotoSerif', 'normal');
+    pdf.addFont('NotoSerif.js', 'NotoSerif', 'normal');
+    pdf.addFont("Roboto-medium.js", "Roboto-medium", "medium");
+    pdf.addFont("Roboto-light.js", "Roboto-light", "light");
+
 
 
     // Set page dimensions
@@ -52,7 +61,7 @@ class RapidoTemplate {
     // Booking History title (left side)
     pdf.setTextColor(...this.darkColor);
     pdf.setFontSize(16);
-    pdf.setFont('Roboto', 'bold');
+    pdf.setFont( "Roboto-medium", "medium");
     pdf.text('Booking History', margin + 5, yPos);
 
     // Add logo image (right side)
@@ -64,7 +73,7 @@ class RapidoTemplate {
       // Fallback to text if image loading fails
       pdf.setTextColor(...this.darkColor);
       pdf.setFontSize(12);
-      pdf.setFont('Roboto', 'bold');
+      pdf.setFont( "Roboto-medium", "medium");
       pdf.text('RAPIDO', headerPageWidth - margin - 20, yPos);
     }
   }
@@ -183,7 +192,7 @@ class RapidoTemplate {
     // Pickup address with text wrapping
     pdf.setTextColor(...this.darkColor);
     pdf.setFontSize(12);
-    pdf.setFont('Roboto', '300');
+    pdf.setFont( "Roboto-light", "light");
     const pickupLines = pdf.splitTextToSize(invoice.pickup, maxWidth);
     const pickupTextHeight = pickupLines.length * 4;
     const pickupStartY = pickupSectionStart + (sectionHeight - pickupTextHeight) / 2 + 4;
@@ -238,7 +247,7 @@ class RapidoTemplate {
 
     pdf.setTextColor(120, 120, 120);
     pdf.setFontSize(9);
-    pdf.setFont('Roboto', 'light');
+    pdf.setFont( "Roboto-light", "light");
 
     const disclaimer1 =
       'This document is issued on request by the passenger. Rapido does not collect any fee/commission from passengers and shall not issue tax invoices to the passengers under this segment. The document may be used for all official / reimbursement purposes.';

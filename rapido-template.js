@@ -1,8 +1,3 @@
-import './Roboto.js';
-import './NotoSerif.js';
-import "./Roboto-medium.js";
-import "./Roboto-light.js";
-
 // Rapido Booking History Template
 // This file contains the template and styling for generating Rapido-style booking history documents
 

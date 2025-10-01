@@ -10,11 +10,17 @@ class RapidoTemplate {
     this.greenColor = [34, 197, 94]; // Green for pickup
     this.redColor = [239, 68, 68]; // Red for drop
   }
+  
 
   // Generate a single Rapido booking history PDF
   async generateBookingHistoryPDF(invoice) {
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF('p', 'mm', 'a4');
+    
+    // Register fonts
+    pdf.addFont('Roboto.js', 'Roboto', 'normal');
+    pdf.addFont('NotoSerif.js', 'NotoSerif', 'normal');
+
 
     // Set page dimensions
     const pageWidth = 210;
@@ -46,7 +52,7 @@ class RapidoTemplate {
     // Booking History title (left side)
     pdf.setTextColor(...this.darkColor);
     pdf.setFontSize(16);
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont('Roboto', 'bold');
     pdf.text('Booking History', margin + 5, yPos);
 
     // Add logo image (right side)
@@ -58,7 +64,7 @@ class RapidoTemplate {
       // Fallback to text if image loading fails
       pdf.setTextColor(...this.darkColor);
       pdf.setFontSize(12);
-      pdf.setFont('helvetica', 'bold');
+      pdf.setFont('Roboto', 'bold');
       pdf.text('RAPIDO', headerPageWidth - margin - 20, yPos);
     }
   }
@@ -98,7 +104,7 @@ class RapidoTemplate {
 
     // Rows styling
     pdf.setTextColor(...this.darkColor);
-    pdf.setFont('PR serif', '500');
+    pdf.setFont('Noto Serif', '500');
     pdf.setFontSize(14);
 
     // Customer name
@@ -143,12 +149,12 @@ class RapidoTemplate {
 
     // Centered Selected Price label
     pdf.setTextColor(...this.darkColor);
-    pdf.setFont('PR serif', '500');
+    pdf.setFont('Noto Serif', '500');
     pdf.setFontSize(16);
     pdf.text('Selected Price', pricePageWidth / 2, yPos + 8, { align: 'center' });
 
     // Centered and larger price amount with proper formatting
-    pdf.setFont('PR serif', 'bold');
+    pdf.setFont('Noto Serif', 'bold');
     pdf.setTextColor(38, 38, 38);
     pdf.setFontSize(20);
     const priceText = `Rs.${invoice.price}`;
@@ -232,7 +238,7 @@ class RapidoTemplate {
 
     pdf.setTextColor(120, 120, 120);
     pdf.setFontSize(9);
-    pdf.setFont('helvetica', 'light');
+    pdf.setFont('Roboto', 'light');
 
     const disclaimer1 =
       'This document is issued on request by the passenger. Rapido does not collect any fee/commission from passengers and shall not issue tax invoices to the passengers under this segment. The document may be used for all official / reimbursement purposes.';

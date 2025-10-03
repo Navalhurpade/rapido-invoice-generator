@@ -5,4 +5,4 @@ this.addFileToVFS("Roboto-VariableFont_wdth,wght-normal.ttf", font);
 this.addFont("Roboto-VariableFont_wdth,wght-normal.ttf", "Roboto-VariableFont_wdth,wght", "normal");
 };
 jsPDFAPI.events.push(['addFonts', callAddFont])
- })(jsPDF.API);
+ })(jspdf.API);

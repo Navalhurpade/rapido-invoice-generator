@@ -5,4 +5,4 @@ this.addFileToVFS("Roboto-light.ttf", font);
 this.addFont("Roboto-light.ttf", "Roboto-light", "light");
 };
 jsPDFAPI.events.push(['addFonts', callAddFont])
- })(jsPDF.API);
+ })(jspdf.API);

@@ -10,21 +10,11 @@ class RapidoTemplate {
     this.greenColor = [34, 197, 94]; // Green for pickup
     this.redColor = [239, 68, 68]; // Red for drop
   }
-  
 
   // Generate a single Rapido booking history PDF
   async generateBookingHistoryPDF(invoice) {
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF('p', 'mm', 'a4');
-    
-    // Register fonts
-    pdf.addFont('Roboto.js', 'Roboto', 'normal');
-    pdf.addFont('NotoSerif.js', 'NotoSerif', 'normal');
-    pdf.addFont('NotoSerif.js', 'NotoSerif', 'normal');
-    pdf.addFont("Roboto-medium.js", "Roboto-medium", "medium");
-    pdf.addFont("Roboto-light.js", "Roboto-light", "light");
-
-
 
     // Set page dimensions
     const pageWidth = 210;
@@ -56,19 +46,19 @@ class RapidoTemplate {
     // Booking History title (left side)
     pdf.setTextColor(...this.darkColor);
     pdf.setFontSize(16);
-    pdf.setFont( "Roboto-medium", "medium");
+    pdf.setFont('helvetica', 'bold');
     pdf.text('Booking History', margin + 5, yPos);
 
     // Add logo image (right side)
     try {
       const logoDataUrl = await this.loadImageAsDataUrl('./logo.jpg');
-      pdf.addImage(logoDataUrl, 'JPEG', headerPageWidth - margin - 30, yPos - 8, 18, 10);
+      pdf.addImage(logoDataUrl, 'JPEG', headerPageWidth - margin - 22, yPos - 8, 18, 10);
     } catch (error) {
       console.warn('Logo failed to load, using text fallback:', error);
       // Fallback to text if image loading fails
       pdf.setTextColor(...this.darkColor);
       pdf.setFontSize(12);
-      pdf.setFont( "Roboto-medium", "medium");
+      pdf.setFont('helvetica', 'bold');
       pdf.text('RAPIDO', headerPageWidth - margin - 20, yPos);
     }
   }
@@ -108,7 +98,7 @@ class RapidoTemplate {
 
     // Rows styling
     pdf.setTextColor(...this.darkColor);
-    pdf.setFont('Noto Serif', '500');
+    pdf.setFont('Times', '500');
     pdf.setFontSize(14);
 
     // Customer name
@@ -136,10 +126,10 @@ class RapidoTemplate {
     pdf.text('Auto', rightX, yPos, { align: 'right' });
     yPos += 8;
 
-    // Time of Ride
+    // Times of Ride
     const formattedDate = this.formatDate(invoice.date);
     const formattedTime = this.formatTime(invoice.time);
-    pdf.text('Time of Ride:', margin + 5, yPos);
+    pdf.text('Times of Ride:', margin + 5, yPos);
     pdf.text(`${formattedDate}, ${formattedTime}`, rightX, yPos, { align: 'right' });
   }
 
@@ -153,12 +143,12 @@ class RapidoTemplate {
 
     // Centered Selected Price label
     pdf.setTextColor(...this.darkColor);
-    pdf.setFont('Noto Serif', '500');
+    pdf.setFont('Times', '500');
     pdf.setFontSize(16);
     pdf.text('Selected Price', pricePageWidth / 2, yPos + 8, { align: 'center' });
 
     // Centered and larger price amount with proper formatting
-    pdf.setFont('Noto Serif', 'bold');
+    pdf.setFont('helvetica', 'bold');
     pdf.setTextColor(38, 38, 38);
     pdf.setFontSize(20);
     const priceText = `Rs.${invoice.price}`;
@@ -187,7 +177,7 @@ class RapidoTemplate {
     // Pickup address with text wrapping
     pdf.setTextColor(...this.darkColor);
     pdf.setFontSize(12);
-    pdf.setFont( "Roboto-light", "light");
+    pdf.setFont('helvetica', 'normal');
     const pickupLines = pdf.splitTextToSize(invoice.pickup, maxWidth);
     const pickupTextHeight = pickupLines.length * 4;
     const pickupStartY = pickupSectionStart + (sectionHeight - pickupTextHeight) / 2 + 4;
@@ -242,7 +232,7 @@ class RapidoTemplate {
 
     pdf.setTextColor(120, 120, 120);
     pdf.setFontSize(9);
-    pdf.setFont( "Roboto-light", "light");
+    pdf.setFont('helvetica', 'light');
 
     const disclaimer1 =
       'This document is issued on request by the passenger. Rapido does not collect any fee/commission from passengers and shall not issue tax invoices to the passengers under this segment. The document may be used for all official / reimbursement purposes.';

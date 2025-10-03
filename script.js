@@ -280,8 +280,13 @@ function minutesToTime(minutes) {
 }
 
 // Generate random ride ID
-function generateRideId() {
-  return 'RAP' + Math.random().toString(36).substr(2, 8).toUpperCase();
+function generateRideId(length = 17) {
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += Math.floor(Math.random() * 10); // Appends a random digit (0-9)
+  }
+  return `RD${result}`;
+
 }
 
 // Generate random invoice ID
